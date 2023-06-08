@@ -6,7 +6,7 @@ import { ethers } from "ethers";
 import { Form } from "react-bootstrap";
 import { CircularProgress } from "@mui/material";
 
-import nftContract from "../artifacts/ERC721/PikaBounchingNft.sol/PikaBounchingNft.json";
+import nftContract from "../artifact/ERC721/PikaBounchingNft.sol/PikaBounchingNft.json";
 import {
   nftContractAddress,
   ownerAddress,

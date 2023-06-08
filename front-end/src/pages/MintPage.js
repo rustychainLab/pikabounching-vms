@@ -9,8 +9,8 @@ import axios from "axios";
 import { Table } from "react-bootstrap";
 import { CircularProgress } from "@mui/material";
 
-import stakingContract from "../artifacts/utils/PikaBounchingStakingVault.sol/PikaBounchingStakingVault.json";
-import nftContract from "../artifacts/ERC721/PikaBounchingNft.sol/PikaBounchingNft.json";
+import stakingContract from "../artifact/utils/PikaBounchingStakingVault.sol/PikaBounchingStakingVault.json";
+import nftContract from "../artifact/ERC721/PikaBounchingNft.sol/PikaBounchingNft.json";
 import {
   stakingContractAddress,
   nftContractAddress,

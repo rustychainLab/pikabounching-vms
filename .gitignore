@@ -1,6 +1,5 @@
 smart_contracts/node_modules
 front-end/node_modules
-front-end/node_modules.old
 coverage
 coverage.json
 typechain
