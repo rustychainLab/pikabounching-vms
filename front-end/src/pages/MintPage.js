@@ -40,7 +40,7 @@ function MintPage() {
   };
 
   const data = useSelector((state) => state.blockchain.value);
-  const [mintAmount, setMintAmount] = useState(1);
+  const [mintAmount, setMintAmount] = useState(0);
   const [userNfts, setUserNfts] = useState([]);
   const [info, setInfo] = useState({
     currentSupply: 0,
