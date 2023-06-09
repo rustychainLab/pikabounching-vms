@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../assets/styles.css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import image1 from "../assets/img/pika-1.svg";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
@@ -9,8 +11,8 @@ import axios from "axios";
 import { Table } from "react-bootstrap";
 import { CircularProgress } from "@mui/material";
 
-import stakingContract from "../artifact/utils/PikaBounchingStakingVault.sol/PikaBounchingStakingVault.json";
-import nftContract from "../artifact/ERC721/PikaBounchingNft.sol/PikaBounchingNft.json";
+import stakingContract from "../artifacts/utils/PikaBounchingStakingVault.sol/PikaBounchingStakingVault.json";
+import nftContract from "../artifacts/ERC721/PikaBounchingNft.sol/PikaBounchingNft.json";
 import {
   stakingContractAddress,
   nftContractAddress,
@@ -20,8 +22,24 @@ import {
 import networksMap from "../utils/networksMap.json";
 
 function MintPage() {
-  const data = useSelector((state) => state.blockchain.value);
+  const [scrollTop, setScrollTop] = React.useState(false);
+  React.useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 340) {
+        setScrollTop(true);
+      } else {
+        setScrollTop(false);
+      }
+    });
+  }, []);
+  const bottomToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
+  const data = useSelector((state) => state.blockchain.value);
   const [mintAmount, setMintAmount] = useState(1);
   const [userNfts, setUserNfts] = useState([]);
   const [info, setInfo] = useState({
@@ -300,14 +318,6 @@ function MintPage() {
             <h3 className="text-center p-2">Minting Info</h3>
             <Table responsive>
               <tbody>
-                {/* <tr>
-                  <td className="p-2">Nft</td>
-                  <td>{info.nftName}</td>
-                </tr>
-                <tr>
-                  <td className="p-2">Symbol</td>
-                  <td>{info.nftSymbol}</td>
-                </tr> */}
                 <tr>
                   <td className="p-2">Minted / Max Supply</td>
                   <td>
@@ -383,14 +393,14 @@ function MintPage() {
                   <img src={image1} className="mint-img" alt="" />
                   <p className="lead" style={{ marginBottom: "30px" }}>
                     A {info.nftName} is fully onchain NTFs, no IPFS or any
-                    external storage. Olny code (x.x).
+                    external storage. Olny code {info.nftSymbol}.
                   </p>
                   <div className="form-group">
                     <div className="d-flex justify-content-center">
                       <button
                         type="button"
                         className="minus btn btn-info rounded-circle"
-                        disabled={mintAmount === 1}
+                        disabled={mintAmount === 0}
                         onClick={() => {
                           setMintAmount(mintAmount - 1);
                         }}
@@ -406,19 +416,30 @@ function MintPage() {
                       <button
                         type="button"
                         className="plus btn btn-info rounded-circle"
-                        disabled={
-                          mintAmount ===
-                          info.maxMintAmountPerTx - info.nftUserBalance
-                        }
                         onClick={() => {
-                          setMintAmount(mintAmount + 1);
+                          if (
+                            mintAmount <
+                            info.maxMintAmountPerTx - info.userNftIds.length
+                          ) {
+                            setMintAmount(mintAmount + 1);
+                          } else {
+                            toast.error("Exceed Maximum Mint Limit", {
+                              theme: "colored",
+                              autoClose: 2000,
+                            });
+                          }
                         }}
                       >
                         +
                       </button>
                     </div>
+                    <ToastContainer />
                     <div>
-                      <button className="btn btn-info mt-3" onClick={mint}>
+                      <button
+                        className="btn btn-info mt-3"
+                        onClick={mint}
+                        disabled={mintAmount === 0}
+                      >
                         {loading ? (
                           <CircularProgress color="inherit" size={18} />
                         ) : (
@@ -482,7 +503,13 @@ function MintPage() {
             </div>
           </>
         ) : null}
+        {scrollTop && (
+          <button onClick={bottomToTop} className="backToTop">
+            &#8593;
+          </button>
+        )}
       </section>
+
       <Footer />
     </section>
   );

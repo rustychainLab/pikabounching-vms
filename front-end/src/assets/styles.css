@@ -48,7 +48,7 @@ body {
 .header {
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   padding: 0 5px;
   background: #fff;
   border: 3px solid #000;
@@ -513,6 +513,7 @@ details > summary::-webkit-details-marker {
   .header {
     width: 80%;
     margin-left: 10%;
+    justify-content: start;
   }
 
   .nav-custom {
