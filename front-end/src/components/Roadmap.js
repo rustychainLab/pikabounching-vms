@@ -7,8 +7,10 @@ import image3 from "../assets/img/pika-3.svg";
 function Roadmap() {
   return (
     <>
-      <h1 className="about-title text-center">Roadmap </h1>
       <section className="roadmap" id="roadmap">
+        <div className="roadmap-title roadmap-container">
+          <h1 className="about-title text-center">Roadmap </h1>
+        </div>
         <div className="timeline roadmap-container">
           <div className="entry">
             <div className="title">

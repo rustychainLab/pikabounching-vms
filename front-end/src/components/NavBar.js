@@ -9,6 +9,7 @@ function NavBar() {
 
   return (
     <header className="header">
+      <div></div>
       <div className="brand">
         <a href="/" className="brand-logo">
           <i>PikaBounching</i>
