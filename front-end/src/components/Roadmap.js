@@ -36,7 +36,7 @@ function Roadmap() {
             </div>
             <div className="body">
               <p>Phase 3</p>
-              <p>PBS airdrop distribution.</p>
+              <p>PBC airdrop distribution.</p>
             </div>
           </div>
           <div className="entry">
