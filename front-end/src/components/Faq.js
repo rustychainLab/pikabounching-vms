@@ -13,7 +13,7 @@ function Faq() {
             <p>
               PikaBounching is first Virtual Mining System project. Based on a
               collection of NFTs that having tratir hasing power mechanism.
-              PikaBounchingCoin(PBC) is the original token in the ecosystem.
+              PikaBounchingCoin($PBC) is the original token in the ecosystem.
               it's like ethereum only minted by miners, so supply will depend on
               community staking PikaBounching Nft
             </p>
