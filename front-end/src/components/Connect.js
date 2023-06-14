@@ -83,10 +83,7 @@ function Connect() {
     <>
       {isConnected ? (
         <>
-          <button
-            className="btn btn-secondary m-2 rounded"
-            onClick={handleShow}
-          >
+          <button className="btn btn-warning m-2 rounded" onClick={handleShow}>
             {data.account &&
               `${data.account.slice(0, 6)}...${data.account.slice(
                 data.account.length - 6,

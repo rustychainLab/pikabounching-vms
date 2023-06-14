@@ -4,11 +4,14 @@ import { RiDiscordFill } from "react-icons/ri";
 
 function Footer() {
   return (
-    <div className="footer container">
-      <p>
-        <i>Pika Foundation</i>&#169; All Right Reserved
-      </p>
-      <div className="social">
+    <div class="footer flex flex-nowrap ">
+      <div>
+        <p class="text-right">
+          <i class="text-bold">Pika Foundation</i>&#169; All Right Reserved
+        </p>
+      </div>
+      {/* <div></div> */}
+      <div class="social">
         <a target="_blank" href="https://github.com/rustychainLab">
           <AiOutlineGithub size={24} color="#000" />
         </a>

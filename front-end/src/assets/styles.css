@@ -132,6 +132,7 @@ body {
 }
 
 .lead {
+  font-color: #fff;
   font-size: 22px;
   line-height: 29px;
 }
@@ -635,7 +636,7 @@ details > summary::-webkit-details-marker {
 
   .mint-container {
     width: 100%;
-    min-height: 70vh;
+    min-height: 50vh;
   }
 
   .item-box {
@@ -748,7 +749,7 @@ details > summary::-webkit-details-marker {
 
   .mint-container {
     width: 100%;
-    min-height: 70vh;
+    min-height: 50vh;
     padding: 10px;
   }
 
@@ -828,7 +829,7 @@ details > summary::-webkit-details-marker {
 
   .mint-container {
     width: 100%;
-    min-height: 70vh;
+    min-height: 50vh;
     padding: 10px;
   }
 }

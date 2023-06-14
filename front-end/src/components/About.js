@@ -2,13 +2,17 @@ import React from "react";
 
 function About() {
   return (
-    <section className="about bg-light" id="about">
+    <section
+      // className="about bg-light"
+      class="about bg-[#4648b6] text-#fff4f4 ..."
+      id="about"
+    >
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-9">
             <div className="text-center">
               <h1 className="about-title">who are the PikaBounching?</h1>
-              <p className="lead text-center">
+              <p className="lead text-center text-yellow">
                 PikaBounching is the first nft project to introduce a virtual
                 mining system, PikaBounchingCoin ($PBC) is the original token in
                 the ecosystem. it's like ethereum only minted by miners, so

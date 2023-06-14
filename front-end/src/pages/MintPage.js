@@ -390,7 +390,11 @@ function MintPage() {
               <div className="col-md-7">
                 <div className="text-center">
                   <h2 className="minttitle title">Claim Your {info.nftName}</h2>
-                  <img src={image1} className="mint-img" alt="" />
+                  <img
+                    src={image1}
+                    class="mint-img w-24 h-24 md:w-48 md:h-auto md:rounded-none rounded-full mx-auto"
+                    alt=""
+                  />
                   <p className="lead" style={{ marginBottom: "30px" }}>
                     A {info.nftName} is fully onchain NTFs, no IPFS or any
                     external storage. Olny code {info.nftSymbol}.

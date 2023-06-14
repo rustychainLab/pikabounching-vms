@@ -13,7 +13,7 @@ function Hero() {
         </p>
         <div className="caption-inner">
           <a href="/mint-page">
-            <button className="btn btn-danger" style={{ color: "#000" }}>
+            <button className="btn btn-warning" style={{ color: "#000" }}>
               Mint Now
             </button>
           </a>
