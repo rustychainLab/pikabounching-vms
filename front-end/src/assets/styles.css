@@ -348,8 +348,8 @@ body {
 }
 
 .info-container {
-  width: 80%;
-  padding-left: 15%;
+  width: 100%;
+  padding: 5%;
 }
 
 .info-buttons {
@@ -721,7 +721,7 @@ details > summary::-webkit-details-marker {
 
   .info-container {
     width: 100%;
-    padding-left: 0%;
+    padding: 5%;
   }
   .timeline {
     max-width: 600px;

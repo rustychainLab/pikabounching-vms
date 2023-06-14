@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../assets/styles.css";
 import menu from "../assets/img/menu.png";
 import close from "../assets/img/cancel.png";
-import Connect from "./Connect";
+import Connect from "./Connect.js";
 
 function NavBar() {
   const [isNavExpanded, setIsNavExpanded] = useState(false);

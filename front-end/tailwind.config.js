@@ -28,8 +28,8 @@ module.exports = {
       "gray-light": "#d3dce6",
     },
     fontFamily: {
-      sans: ["Graphik", "sans-serif"],
-      serif: ["Merriweather", "serif"],
+      display: ["Pally", "Comic Sans MS", "sans-serif"],
+      body: ["Pally", "Comic Sans MS", "sans-serif"],
     },
     extend: {
       fontFamily: {
