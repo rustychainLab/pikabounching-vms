@@ -19,18 +19,17 @@ const Dashboard = () => {
   const data = useSelector((state) => state.blockchain.value);
   const [appInfo, setAppInfo] = useState({
     nftContractBalance: 0,
-    nftContractPaused: 1,
-    maxMintAmountPerTx: 5,
+    nftContractMintStatus: false,
+    maxMintAmountPerTx: 0,
     mintCost: 0,
   });
 
   const [loading, setLoading] = useState(false);
 
   async function getAppInfo() {
-    if (
-      (data.network === networksMap[networkDeployedTo]) &
-      (data.account !== "")
-    ) {
+    // console.log(typeof data.chainId);
+    // console.log(typeof networkDeployedTo);
+    if (data.chainId === networkDeployedTo && data.account !== "") {
       const provider = new ethers.providers.Web3Provider(
         window.ethereum,
         "any"
@@ -46,15 +45,19 @@ const Dashboard = () => {
       }
 
       const balance = await provider.getBalance(nftContractAddress);
-      const ispaused = await nft_contract.callStatic.paused();
-      const _fee = await nft_contract.callStatic.cost();
-      const _maxMintAmount = await nft_contract.callStatic.maxMintAmountPerTx();
+      const _mintStatus = await nft_contract.mintingStatus();
+      const _fee = await nft_contract.mintCost();
+      const _maxMintAmount = await nft_contract.maxMintAmountPerTx();
+      // console.log("nftContractBalance: " + balance);
+      // console.log("mintingStatus: " + _mintStatus);
+      // console.log("fee: " + _fee);
+      // console.log("maxmintAmount: " + _maxMintAmount);
 
       setAppInfo({
         nftContractBalance: Number(ethers.utils.formatUnits(balance, "ether")),
-        nftContractPaused: Number(ispaused),
+        nftContractMintStatus: _mintStatus,
         maxMintAmountPerTx: _maxMintAmount,
-        mintCost: Number(ethers.utils.formatUnits(_fee, "ether")),
+        mintCost: ethers.utils.formatUnits(_fee, "ether"),
       });
     } else {
       navigate("/");
@@ -62,7 +65,8 @@ const Dashboard = () => {
   }
 
   async function changeMintCost() {
-    if (data.network === networksMap[networkDeployedTo]) {
+    // alert("changeMintCost");
+    if (data.chainId === networkDeployedTo) {
       try {
         setLoading(true);
         const provider = new ethers.providers.Web3Provider(
@@ -83,14 +87,15 @@ const Dashboard = () => {
         window.location.reload();
       } catch (error) {
         setLoading(false);
-        window.alert("An error has occured");
+        window.alert(error);
         console.log(error);
       }
     }
   }
 
   async function changeMintAmount() {
-    if (data.network === networksMap[networkDeployedTo]) {
+    // alert("changeMintAmount");
+    if (data.chainId === networkDeployedTo) {
       try {
         setLoading(true);
         const provider = new ethers.providers.Web3Provider(
@@ -111,14 +116,15 @@ const Dashboard = () => {
         window.location.reload();
       } catch (error) {
         setLoading(false);
-        window.alert("An error has occured");
+        window.alert(error);
         console.log(error);
       }
     }
   }
 
   async function withdraw() {
-    if (data.network === networksMap[networkDeployedTo]) {
+    // alert("Withdrawl not active");
+    if (data.chainId === networkDeployedTo) {
       try {
         setLoading(true);
         const provider = new ethers.providers.Web3Provider(
@@ -137,15 +143,16 @@ const Dashboard = () => {
         window.location.reload();
       } catch (error) {
         setLoading(false);
-        window.alert("An error has occured");
+        window.alert(error);
         console.log(error);
       }
     }
   }
 
   async function changeContractState() {
-    if (data.network === networksMap[networkDeployedTo]) {
-      if (appInfo.nftContractPaused == 1) {
+    // alert("changeContractState");
+    if (data.chainId === networkDeployedTo) {
+      if (appInfo.nftContractMintStatus === false) {
         try {
           setLoading(true);
           const provider = new ethers.providers.Web3Provider(
@@ -158,13 +165,13 @@ const Dashboard = () => {
             nftContract.abi,
             signer
           );
-          const unpause_tx = await nft_contract.pause(2);
+          const unpause_tx = await nft_contract.setMinting(true);
           await unpause_tx.wait();
           setLoading(false);
           window.location.reload();
         } catch (error) {
           setLoading(false);
-          window.alert("An error has occured");
+          window.alert(error);
           console.log(error);
         }
       } else {
@@ -180,14 +187,14 @@ const Dashboard = () => {
             nftContract.abi,
             signer
           );
-          const pause_tx = await nft_contract.pause(1);
+          const pause_tx = await nft_contract.setMinting(false);
           await pause_tx.wait();
           setLoading(false);
           window.location.reload();
         } catch (error) {
           setLoading(false);
-          window.alert("An error has occured");
-          console.log(error);
+          window.alert(error);
+          console.log(error.code);
         }
       }
     }
@@ -216,13 +223,23 @@ const Dashboard = () => {
                 </label>
               </div>
               <div className="dashboard-button-up">
-                <button className="btn btn-info" onClick={withdraw}>
-                  {loading ? (
-                    <CircularProgress color="inherit" size={18} />
-                  ) : (
-                    "withdraw"
-                  )}
-                </button>
+                {appInfo.nftContractBalance <= 0 ? (
+                  <button className="btn btn-danger btn-sm" disabled>
+                    {loading ? (
+                      <CircularProgress color="inherit" size={18} />
+                    ) : (
+                      "withdraw"
+                    )}
+                  </button>
+                ) : (
+                  <button className="btn btn-success btn-sm" onClick={withdraw}>
+                    {loading ? (
+                      <CircularProgress color="inherit" size={18} />
+                    ) : (
+                      "withdraw"
+                    )}
+                  </button>
+                )}
               </div>
             </div>
             <br />
@@ -241,7 +258,10 @@ const Dashboard = () => {
                 />
               </div>
               <div className="dashboard-button">
-                <button className="btn btn-info" onClick={changeMintAmount}>
+                <button
+                  className="btn btn-info btn-sm"
+                  onClick={changeMintAmount}
+                >
                   {loading ? (
                     <CircularProgress color="inherit" size={18} />
                   ) : (
@@ -263,7 +283,10 @@ const Dashboard = () => {
                 />
               </div>
               <div className="dashboard-button">
-                <button className="btn btn-info" onClick={changeMintCost}>
+                <button
+                  className="btn btn-info btn-sm"
+                  onClick={changeMintCost}
+                >
                   {loading ? (
                     <CircularProgress color="inherit" size={18} />
                   ) : (
@@ -277,25 +300,36 @@ const Dashboard = () => {
             <div className="dashboard-row">
               <div className="dashboard-left">
                 <label>
-                  {appInfo.nftContractPaused == 1
+                  {appInfo.nftContractMintStatus === false
                     ? "Nft Contract is paused"
                     : "Nft Contract is active"}
                 </label>
               </div>
               <div className="dashboard-button-up">
-                <button className="btn btn-info" onClick={changeContractState}>
-                  {appInfo.nftContractPaused == 1 ? (
-                    loading ? (
+                {/* <button className="btn btn-info" onClick={changeContractState}> */}
+                {appInfo.nftContractMintStatus === false ? (
+                  <button
+                    className="btn btn-info btn-sm"
+                    onClick={changeContractState}
+                  >
+                    {loading ? (
                       <CircularProgress color="inherit" size={18} />
                     ) : (
                       "Activate"
-                    )
-                  ) : loading ? (
-                    <CircularProgress color="inherit" size={18} />
-                  ) : (
-                    "Pause"
-                  )}
-                </button>
+                    )}
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-warning btn-sm"
+                    onClick={changeContractState}
+                  >
+                    {loading ? (
+                      <CircularProgress color="inherit" size={18} />
+                    ) : (
+                      "Pause"
+                    )}
+                  </button>
+                )}
               </div>
             </div>
           </div>
