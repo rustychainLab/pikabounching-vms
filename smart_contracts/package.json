@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "deploy": "npx hardhat run scripts/deploy-vault.js",
+    "verify": "npx hardhat verify --network goerli --contract",
     "clean": "npx hardhat clean",
     "test": "npx hardhat test"
   },
