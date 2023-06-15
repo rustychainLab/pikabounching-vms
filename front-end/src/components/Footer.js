@@ -12,7 +12,7 @@ function Footer() {
       </div>
       {/* <div></div> */}
       <div class="social">
-        <a target="_blank" href="https://github.com/rustychainLab">
+        <a target="_blank" href="https://github.com/">
           <AiOutlineGithub size={24} color="#000" />
         </a>
         <a target="_blank" href="https://twitter.com/pikafoundation">
